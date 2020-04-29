@@ -1,0 +1,121 @@
+<template>
+  <q-page>
+    <div class="q-pa-md">
+      <q-table
+        title="Treats"
+        :data="data"
+        :columns="columns"
+        row-key="id"
+        :filter="filter"
+        :loading="loading"
+      >
+
+        <template v-slot:top>
+          <span class="text-h5 text-weight-light q-pa-md">
+        <span class="text-blue-grey-14">Stok Data Mebel</span>
+      </span>
+          <q-space />
+          <q-input borderless dense debounce="500" color="primary" v-model="filter">
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </template>
+
+      </q-table>
+    </div>
+  </q-page>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      loading: false,
+      filter: '',
+      rowCount: 10,
+      columns: [
+
+        { name: 'JenisMebel', align: 'center', label: 'Jenis Mebel', field: 'JenisMebel' },
+        { name: 'HargaMebel', align: 'center', label: 'Harga Mebel', field: 'hargamebel' },
+        { name: 'JumblahBarang', align: 'center', label: 'Jumblah Barang', field: 'jumblahbarang' },
+        { name: 'Total', align: 'center', label: 'Total', field: 'total' }
+
+      ],
+      data: [
+        {
+          JenisMebel: 'Kursi dan Meja',
+          hargamebel: '35000000',
+          jumblahbarang: '2',
+          total: '70000000'
+        },
+        {
+          JenisMebel: 'Kursi dan Meja',
+          hargamebel: '45000000',
+          jumblahbarang: '1',
+          total: '45000000'
+        },
+        {
+          JenisMebel: 'Meja Belajar',
+          hargamebel: '2000000',
+          jumblahbarang: '3',
+          total: '6000000'
+        },
+        {
+          JenisMebel: 'Dipan Kayu',
+          hargamebel: '5000000',
+          jumblahbarang: '3',
+          total: '150000000'
+        },
+        {
+          JenisMebel: 'Lemari Kayu',
+          hargamebel: '5000000',
+          jumblahbarang: '3',
+          total: '150000000'
+        },
+        {
+          JenisMebel: 'Meja Rias',
+          hargamebel: '4000000',
+          jumblahbarang: '2',
+          total: '8000000'
+        },
+        {
+          JenisMebel: 'Meja Rias',
+          hargamebel: '2000000',
+          jumblahbarang: '1',
+          total: '0000002'
+        }
+
+      ]
+    }
+  },
+
+  methods: {
+    // emulate fetching data from server
+    addRow () {
+      this.loading = true
+      setTimeout(() => {
+        const
+          index = Math.floor(Math.random() * (this.data.length + 1)),
+          row = this.original[Math.floor(Math.random() * this.original.length)]
+        if (this.data.length === 0) {
+          this.rowCount = 0
+        }
+        row.id = ++this.rowCount
+        const addRow = { ...row } // extend({}, row, { name: `${row.name} (${row.__count})` })
+        this.data = [...this.data.slice(0, index), addRow, ...this.data.slice(index)]
+        this.loading = false
+      }, 500)
+    },
+
+    removeRow () {
+      this.loading = true
+      setTimeout(() => {
+        const index = Math.floor(Math.random() * this.data.length)
+        this.data = [...this.data.slice(0, index), ...this.data.slice(index + 1)]
+        this.loading = false
+      }, 500)
+    }
+  }
+}
+</script>
